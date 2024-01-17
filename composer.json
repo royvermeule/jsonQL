@@ -5,7 +5,8 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "src\\": "src/"
+      "src\\": "src/",
+      "bin\\": "bin/"
     }
   },
   "authors": [
@@ -14,5 +15,11 @@
       "email": "roywilliamvermeulen@gmail.com"
     }
   ],
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "require": {
+    "symfony/console": "7.1.x-dev"
+  },
+  "bin": [
+    "bin/jsonql"
+  ]
 }

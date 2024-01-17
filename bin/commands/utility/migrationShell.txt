@@ -1,0 +1,14 @@
+<?php
+
+namespace commands;
+
+use bin\commands\utility\Migration;
+use src\schema\SchemaBuilder;
+
+class --name-- extends SchemaBuilder implements Migration
+{
+    public function __invoke(SchemaBuilder $schema)
+    {
+        // Write you migrations here
+    }
+}
