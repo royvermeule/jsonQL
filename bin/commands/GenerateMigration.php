@@ -29,12 +29,24 @@ class GenerateMigration extends Command
 
         file_put_contents($this->jsonPath . 'migrations/' . $migrationName . '.php', $migration);
 
-        $registeredMigrations = [];
+        $registeredMigrations = null;
         if (file_exists(__DIR__ . '/utility/json/migrations.json')) {
             $registeredMigrations = json_decode(file_get_contents(__DIR__ . '/utility/json/migrations.json'), true);
         }
 
+        $newMigrations = [
+          [
+              'migrationName' => $migrationName
+          ]
+        ];
 
+        if ($registeredMigrations !== null) {
+            $finalMigrations = array_merge($registeredMigrations, $newMigrations);
+        } else {
+            $finalMigrations = $newMigrations;
+        }
+
+        file_put_contents(__DIR__ . '/utility/json/migrations.json', json_encode($finalMigrations, JSON_PRETTY_PRINT));
 
         return Command::SUCCESS;
     }

@@ -6,6 +6,7 @@ use Symfony\Component\Console\Application;
 
 $app = new Application();
 $app->add(new \bin\commands\GenerateMigration());
+$app->add(new \bin\commands\ExecuteMigrations());
 try {
   $app->run();
 } catch (Exception $e) {

@@ -10,10 +10,12 @@ class SchemaBuilder
     private static array $tables;
     private array $constraints = [];
 
-    public function addTable(string $tableName): void
+    public function addTable(string $tableName): self
     {
         self::$currentTable = $tableName;
         self::$tables[$tableName] = [];
+
+        return $this;
     }
 
     public function addColumn(
@@ -23,7 +25,7 @@ class SchemaBuilder
         bool $isAutoIncrement = false,
         bool $isPk = false,
         bool $isFk = false,
-    ): void
+    ): self
     {
         self::$tables[self::$currentTable][$name] = [
             'type' => $type,
@@ -32,6 +34,8 @@ class SchemaBuilder
             'isPk' => $isPk,
             'isFk' => $isFk
         ];
+
+        return $this;
     }
 
     public function addForeignKeyConstraint(
@@ -40,7 +44,7 @@ class SchemaBuilder
         string $localColumnName,
         bool $onDeleteRestrict = true,
         bool $onDeleteCascade = false
-    ): void
+    ): self
     {
         $this->constraints[self::$currentTable][$localColumnName][$foreignTable][$foreignColumnName] = [
             'onDeleteRestrict' => $onDeleteRestrict,
@@ -51,11 +55,8 @@ class SchemaBuilder
             'onDeleteRestrict' => $onDeleteRestrict,
             'onDeleteCascade' => $onDeleteCascade
         ];
-    }
 
-    public function getSchema(): string
-    {
-        return json_encode(self::$tables);
+        return $this;
     }
 
     public function build(string $path = 'json'): void
